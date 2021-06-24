@@ -39,7 +39,7 @@ sPCAN = function(netlist, directed = FALSE, configuration, tau = NULL, K = NULL,
     maxF = max(c(as.numeric(gsub(")", "", gsub("kstar\\(", "", configuration[grepl("kstar", configuration)]))) + 1,
                  as.numeric(gsub(")", "", gsub("cycle\\(", "", configuration[grepl("cycle", configuration)])))))
   })
-
+ 
   if(is.null(tau)){tau = 2 * maxF}
   if(is.null(K)){K = floor(min(netsizelist) / tau)}
 
