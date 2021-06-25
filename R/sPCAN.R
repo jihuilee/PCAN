@@ -24,8 +24,7 @@
 #' @importFrom ggplot2 scale_color_brewer
 #' @importFrom ggplot2 scale_fill_brewer
 #' @importFrom ggplot2 ggplot_gtable
-#' @importFrom grid grid.draw
-#' @importFrom gridExtra grid.arrange
+#' @importFrom ggplot2 ggplot_build
 #'
 #' @export
 #'
