@@ -4,8 +4,7 @@
 \alias{PCAN}
 \title{PCA on a sample of networks and calculate PCA contribution of variables to explaining variabilities in PCs}
 \usage{
-PCAN(netlist, directed = FALSE, configuration, numdim = NULL,
-  subgroup = NULL)
+PCAN(netlist, directed = FALSE, configuration, subgroup = NULL)
 }
 \arguments{
 \item{netlist}{A list of networks in a form or adjacency matrix}
@@ -13,8 +12,6 @@ PCAN(netlist, directed = FALSE, configuration, numdim = NULL,
 \item{directed}{Default is FALSE (undirected network).}
 
 \item{configuration}{Collection of subgraphs (topological features)}
-
-\item{numdim}{Number of PCs for calculating contribution. Default is the number of subgraph configurations.}
 
 \item{subgroup}{Vector of subgroup membership. Default is NULL (i.e. no subgroup).}
 

@@ -6,7 +6,6 @@
 #' @param K The number of subgraphs
 #' @param tau Minimum size of a subgraph
 #' @param seed Seed number. Default is 1234.
-#' @param numdim Number of PCs for calculating contribution. Default is the number of subgraph configurations.
 #' @param subgroup Vector of subgroup membership. Default is NULL (i.e. no subgroup).
 #'
 #' @importFrom gridExtra grid.arrange
@@ -30,9 +29,9 @@
 #' @export
 #'
 
-PCAN = function(netlist, directed = FALSE, configuration, numdim = NULL, subgroup = NULL)
+PCAN = function(netlist, directed = FALSE, configuration, subgroup = NULL)
 {
-  if(is.null(numdim)){numdim = length(configuration)}
+  numdim = length(configuration)
 
   start = Sys.time()
   # Configuration density matrix

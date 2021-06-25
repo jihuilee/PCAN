@@ -6,7 +6,6 @@
 #' @param tau Minimum size of a subgraph
 #' @param K The number of subgraphs
 #' @param seed Seed number. Default is 1234.
-#' @param numdim Number of PCs for calculating contribution. Default is the number of subgraph configurations.
 #' @param subgroup Vector of subgroup membership. Default is NULL (i.e. no subgroup).
 #'
 #' @importFrom gridExtra grid.arrange
@@ -30,9 +29,9 @@
 #' @export
 #'
 
-sPCAN = function(netlist, directed = FALSE, configuration, tau = NULL, K = NULL, seed = 1234, numdim = NULL, subgroup = NULL)
+sPCAN = function(netlist, directed = FALSE, configuration, tau = NULL, K = NULL, seed = 1234, subgroup = NULL)
 {
-  if(is.null(numdim)){numdim = length(configuration)}
+  numdim = length(configuration)
   netsizelist = unlist(lapply(netlist, nrow))
 
   # Adjust values of tau and K if needed
