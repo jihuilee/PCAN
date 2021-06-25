@@ -39,7 +39,7 @@ sPCAN = function(netlist, directed = FALSE, configuration, tau = NULL, K = NULL,
     maxF = max(c(as.numeric(gsub(")", "", gsub("kstar\\(", "", configuration[grepl("kstar", configuration)]))) + 1,
                  as.numeric(gsub(")", "", gsub("cycle\\(", "", configuration[grepl("cycle", configuration)])))))
   })
- 
+
   if(is.null(tau)){tau = 2 * maxF}
   if(is.null(K)){K = floor(min(netsizelist) / tau)}
 
@@ -48,6 +48,7 @@ sPCAN = function(netlist, directed = FALSE, configuration, tau = NULL, K = NULL,
             Accordingly, the number of subgraphs (K) is reset to be minimum network size / tau.")}
 
 
+  start = Sys.time()
   # Configuration density matrix
   M0 = net_list_density_partition(netlist = netlist, directed = directed, configuration = configuration, tau = tau, K = K, seed = seed)
 
@@ -57,6 +58,7 @@ sPCAN = function(netlist, directed = FALSE, configuration, tau = NULL, K = NULL,
 
   # PCA
   PCA = prcomp(M, scale. = FALSE)
+  end = Sys.time()
 
   # PCA contribution
   contrib0 = get_pca_var(PCA)$contrib[,1:min(numdim, length(PCA$sdev))]
@@ -70,8 +72,8 @@ sPCAN = function(netlist, directed = FALSE, configuration, tau = NULL, K = NULL,
   if(is.null(subgroup)){subgroup = kmeans(x = PCA$x[, 1:numdim], centers = 2)$cluster}
 
   # Plot1: PCA summary
-  Plot1 = PCAN_plot(PCA, subgroup)
-  Plot1 = grid.arrange(grobs = Plot1, nrow = 2)
+  PLIST1 = PCAN_plot(PCA, subgroup)
+  Plot1 = grid.arrange(grobs = PLIST1, nrow = 2)
 
   # Plot2 & Plot3: Plot each PC separately
   plotdat = data.frame(PCA$x[,1:numdim], Subgroup = subgroup)
@@ -100,6 +102,7 @@ sPCAN = function(netlist, directed = FALSE, configuration, tau = NULL, K = NULL,
   Plot3 = grid.arrange(grobs = PLIST3, nrow = 1)
 
   return(list(M0 = M0, M = M, PCA = PCA, tau = tau, K = K,
-              contribution = contribution, variability = variability,
+              contribution = contribution, variability = variability, computingtime = end - start,
+              PLIST1 = PLIST1, PLIST2 = PLIST2, PLIST3 = PLIST3,
               Plot1 = Plot1, Plot2 = Plot2, Plot3 = Plot3))
 }

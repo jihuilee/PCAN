@@ -25,7 +25,7 @@ PCAN_plot = function(PCA, subgroup, geom = c("point", "text"))
                 labs(x = "Principal Components", title = "") +
                 scale_y_continuous(expand = expansion(mult = c(0, 0.07))) +
                 theme(plot.title = element_text(size = 15), legend.position = "none",
-                      axis.text.x = element_text(size = 15), axis.text.y = element_text(size = 15),
+                      axis.text.x = element_text(size = 15), axis.text.y = element_blank(),
                       axis.title.x = element_text(size = 15), axis.title.y = element_text(size = 15),
                       panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 

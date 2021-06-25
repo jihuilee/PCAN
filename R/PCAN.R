@@ -29,6 +29,7 @@
 
 PCAN = function(netlist, directed = FALSE, configuration, numdim = 5, subgroup = NULL)
 {
+  start = Sys.time()
   # Configuration density matrix
   M0 = net_list_density(netlist = netlist, directed = directed, configuration = configuration)
 
@@ -38,6 +39,7 @@ PCAN = function(netlist, directed = FALSE, configuration, numdim = 5, subgroup =
 
   # PCA
   PCA = prcomp(M, scale. = FALSE)
+  end = Sys.time()
 
   # PCA contribution
   contrib0 = get_pca_var(PCA)$contrib[,1:min(numdim, length(PCA$sdev))]
@@ -51,8 +53,8 @@ PCAN = function(netlist, directed = FALSE, configuration, numdim = 5, subgroup =
   if(is.null(subgroup)){subgroup = kmeans(x = PCA$x[, 1:numdim], centers = 2)$cluster}
 
   # Plot1: PCA summary
-  Plot1 = PCAN_plot(PCA, subgroup)
-  Plot1 = grid.arrange(grobs = Plot1, nrow = 2)
+  PLIST1 = PCAN_plot(PCA, subgroup)
+  Plot1 = grid.arrange(grobs = PLIST1, nrow = 2)
 
   # Plot2 & Plot3: Plot each PC separately
   plotdat = data.frame(PCA$x[,1:numdim], Subgroup = subgroup)
@@ -81,7 +83,8 @@ PCAN = function(netlist, directed = FALSE, configuration, numdim = 5, subgroup =
   Plot3 = grid.arrange(grobs = PLIST3, nrow = 1)
 
   return(list(M0 = M0, M = M, PCA = PCA,
-              contribution = contribution, variability = variability,
+              contribution = contribution, variability = variability, computingtime = end - start,
+              PLIST1 = PLIST1, PLIST2 = PLIST2, PLIST3 = PLIST3,
               Plot1 = Plot1, Plot2 = Plot2, Plot3 = Plot3))
 }
 
