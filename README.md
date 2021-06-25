@@ -1,4 +1,4 @@
 # `PCAN`
-Principal Component Analysis for Network Samples (PCAN)
+Principal Component Analysis for Network (PCAN) Samples
 
-devtools::install_github("jihuilee/PCAN@main")
+devtools::install_github("jihuilee/PCAN")
