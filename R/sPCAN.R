@@ -2,11 +2,11 @@
 #'
 #' @param netlist A list of networks in a form or adjacency matrix
 #' @param directed Default is FALSE (undirected network).
-#' @param configuration Collection of network statistics (topological features)
+#' @param configuration Collection of subgraphs (topological features)
 #' @param tau Minimum size of a subgraph
 #' @param K The number of subgraphs
 #' @param seed Seed number. Default is 1234.
-#' @param numdim Number of PCs for calculating contribution. Default is 5.
+#' @param numdim Number of PCs for calculating contribution. Default is the number of subgraph configurations.
 #' @param subgroup Vector of subgroup membership. Default is NULL (i.e. no subgroup).
 #'
 #' @importFrom gridExtra grid.arrange
@@ -30,8 +30,9 @@
 #' @export
 #'
 
-sPCAN = function(netlist, directed = FALSE, configuration, tau = NULL, K = NULL, seed = 1234, numdim = 5, subgroup = NULL)
+sPCAN = function(netlist, directed = FALSE, configuration, tau = NULL, K = NULL, seed = 1234, numdim = NULL, subgroup = NULL)
 {
+  if(is.null(numdim)){numdim = length(configuration)}
   netsizelist = unlist(lapply(netlist, nrow))
 
   # Adjust values of tau and K if needed
@@ -61,13 +62,15 @@ sPCAN = function(netlist, directed = FALSE, configuration, tau = NULL, K = NULL,
   PCA = prcomp(M, scale. = FALSE)
   end = Sys.time()
 
+  # PCA variability
+  variability = (100*PCA$sdev^2/sum(PCA$sdev^2))
+  numdim = max(which(variability >= 1)) # >= 1% of variability
+  variability = variability[1:numdim]
+
   # PCA contribution
   contrib0 = get_pca_var(PCA)$contrib[,1:min(numdim, length(PCA$sdev))]
   contribution = expand.grid(x = rownames(contrib0), y = colnames(contrib0))
   contribution$value = c(contrib0)
-
-  # PCA variability
-  variability = (100*PCA$sdev^2/sum(PCA$sdev^2))[1:numdim]
 
   # K-means if subgroup is NULL
   if(is.null(subgroup)){subgroup = kmeans(x = PCA$x[, 1:numdim], centers = 2)$cluster}

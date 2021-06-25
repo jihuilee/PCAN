@@ -5,14 +5,14 @@
 \title{Sampling-based PCA on a sample of networks and calculate PCA contribution of variables to explaining variabilities in PCs}
 \usage{
 sPCAN(netlist, directed = FALSE, configuration, tau = NULL, K = NULL,
-  seed = 1234, numdim = 5, subgroup = NULL)
+  seed = 1234, numdim = NULL, subgroup = NULL)
 }
 \arguments{
 \item{netlist}{A list of networks in a form or adjacency matrix}
 
 \item{directed}{Default is FALSE (undirected network).}
 
-\item{configuration}{Collection of network statistics (topological features)}
+\item{configuration}{Collection of subgraphs (topological features)}
 
 \item{tau}{Minimum size of a subgraph}
 
@@ -20,7 +20,7 @@ sPCAN(netlist, directed = FALSE, configuration, tau = NULL, K = NULL,
 
 \item{seed}{Seed number. Default is 1234.}
 
-\item{numdim}{Number of PCs for calculating contribution. Default is 5.}
+\item{numdim}{Number of PCs for calculating contribution. Default is the number of subgraph configurations.}
 
 \item{subgroup}{Vector of subgroup membership. Default is NULL (i.e. no subgroup).}
 }
