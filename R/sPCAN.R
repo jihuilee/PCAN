@@ -23,6 +23,7 @@
 #' @importFrom ggplot2 element_blank
 #' @importFrom ggplot2 scale_color_brewer
 #' @importFrom ggplot2 scale_fill_brewer
+#' @importFrom ggplot2 ggplot_gtable
 #' @importFrom grid grid.draw
 #' @importFrom gridExtra grid.arrange
 #'
@@ -99,6 +100,20 @@ sPCAN = function(netlist, directed = FALSE, configuration, tau = NULL, K = NULL,
   }
 
   Plot2 = grid.arrange(grobs = PLIST2, nrow = 1)
+
+  g_legend = function(a.gplot) {
+    tmp = ggplot_gtable(ggplot_build(a.gplot))
+    leg = which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+    legend = tmp$grobs[[leg]]
+    return(legend)}
+
+  mylegend = g_legend(PLIST3[[1]])
+
+  PLIST3_2 = vector("list", numdim)
+  for (i in 1:numdim) {PLIST3_2[[i]] = PLIST3[[i]] + theme(legend.position = "none")}
+
+  Plot3 = grid.arrange(do.call("arrangeGrob", c(PLIST3_2, nrow = 1)), mylegend, heights = c(9/10, 1/10))
+
   Plot3 = grid.arrange(grobs = PLIST3, nrow = 1)
 
   return(list(M0 = M0, M = M, PCA = PCA, tau = tau, K = K,
