@@ -25,6 +25,7 @@
 #' @importFrom ggplot2 scale_fill_brewer
 #' @importFrom ggplot2 ggplot_gtable
 #' @importFrom ggplot2 ggplot_build
+#' @importFrom gridExtra arrangeGrob
 #'
 #' @export
 #'
