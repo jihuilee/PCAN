@@ -117,7 +117,8 @@ sPCAN = function(netlist, directed = FALSE, configuration, tau = NULL, K = NULL,
   Plot3 = grid.arrange(do.call("arrangeGrob", c(PLIST3_2, nrow = 1)), mylegend, heights = c(9/10, 1/10))
 
   return(list(M0 = M0, M = M, PCA = PCA, tau = tau, K = K,
-              contribution = contribution, variability = variability, computingtime = end - start,
+              contribution = contribution, variability = variability,
+              computingtime = difftime(end, start, units = "secs"),
               PLIST1 = PLIST1, PLIST2 = PLIST2, PLIST3 = PLIST3,
               Plot1 = Plot1, Plot2 = Plot2, Plot3 = Plot3))
 }
